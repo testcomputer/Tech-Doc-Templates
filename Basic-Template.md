@@ -51,7 +51,7 @@
 </div>
 
 
-
+<!-- State yourself outline bit by bit>
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -79,7 +79,7 @@
 </details>
 
 
-
+<!-- Each section will have a breakdown behind the code>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
