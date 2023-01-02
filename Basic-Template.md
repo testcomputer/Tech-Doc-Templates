@@ -21,8 +21,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![MIT License][license-shield]][license-urlTEST]
+[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/daniel-j-w-torres/]
 
 
 
