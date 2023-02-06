@@ -1,3 +1,6 @@
+<!-- Create multiple templates -->
+
+
 <div id="top"></div>
 <!--
 *** Thanks for checking out the Best-Template. If you have a suggestion
