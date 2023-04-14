@@ -1,0 +1,106 @@
+With a dual boot system, both macOS and Linux are installed on your Mac. You can just hold Option while your computer boots up to choose which operating system to use. The main difference between a dual boot system and a virtual machine is that you can only use one OS at a time while dual-booting, but you get better performance.
+If you don't plan to ever use macOS again, you might want to completely replace it with Linux. That way, none of your storage is used up by its system files. However, if you ever change your mind, it's difficult and time-consuming to restore macOS again in the future. This is especially true since Linux writes over the macOS Recovery partition.
+For that reason, we recommend you dual boot Linux on your Mac. If you're really certain you don't want to do that, just skip the Partition step in the instructions below.
+
+Despite what we've said above, installing Linux isn't currently possible if your Mac uses an Apple silicon chip, whether it's an M1, M1 Pro, or M1 Max. Your only option for running Linux on an Apple silicon Mac is to use a virtual machine such as Parallels or UTM. Alternatively, you can run Linux from a bootable Linux USB, but the performance won't be as smooth.
+
+ Step 1: Prepare Your Mac for Installing Linux
+
+To install Linux on your Mac, you need a USB flash drive with at least 2GB of storage. You'll erase the flash drive in a future step to put an Ubuntu installer on it, so make sure you've backed up any important files first.
+
+Use an Ethernet adapter to connect your Mac to the internet. This is important, because your Wi-Fi may not work in Ubuntu without third-party drivers. Similarly, iMac users should get hold of a USB keyboard or mouse, in case Bluetooth doesn't work.
+
+If you plan to dual boot your Mac with Linux, you also need to make sure you have enough free storage. Open the Apple menu and go to System Setting > General > Storage to check that you have at least 25GB free (but preferably more).
+
+Finally, make a backup of your Mac. You shouldn't lose any data by installing Linux in a dual boot partition. However, if something goes wrong, you may need to erase your entire Mac to fix it.
+
+If you plan to replace macOS with Linux, rather than creating a dual-boot system, use a service like Carbon Copy Cloner to back up your macOS Recovery partition. This makes it far easier to revert to macOS again in the future.
+
+For a dual boot system (which we strongly recommend), you need to create a Linux partition on your Mac's hard drive. If you don't want to create a dual boot system, skip ahead to the next step.
+
+In fact, to dual boot Linux on a Mac, you need two extra partitions: one for Linux and a second for swap space. The swap partition must be as big as the amount of RAM your Mac has. Check this by going to Apple > About This Mac and looking at the Memory.
+
+Use Disk Utility to create new partitions on your Mac:
+
+    Open Disk Utility from the Utilities folder in your Applications, or search for it via Spotlight.
+    In the top-left corner, select View > Show All Devices.
+    Select the highest-level drive for your Mac hard disk, then click Partition.
+    Use the plus (+) button to create a new partition and click Add Partition. Name it UBUNTU and set the format to MS-DOS (FAT32). Give it as much space as you want to use for Linux.
+    
+    Click Apply to create the partition.
+Repeat the steps above to create another partition. Name this partition SWAP and set the format to MS-DOS (FAT) again. Make the size match the amount of RAM in your Mac. This might be something like 8GB, 16GB, or more.
+Click Apply to create the partition. 
+
+If you can't create new partitions, it could be because FileVault is encrypting your hard drive. Go to System Settings > Network > FileVault to turn it off.
+Install rEFInd for Better Boot Options
+
+The standard boot manager on your Mac doesn't always work with Ubuntu. This means you need to install a third-party boot manager instead, which will let you easily choose between macOS or Linux when you start up your computer.
+
+https://sourceforge.net/projects/refind/
+
+Thus, your next step is to download rEFInd, which is the boot manager we recommend. To install rEFInd, you need to temporarily disable System Integrity Protection. This is an important security feature for macOS, so make sure you enable it again after.
+
+
+  To install the rEFInd boot manager:
+
+    With SIP disabled, open Terminal from the Utilities folder in Applications (or search for it using Spotlight).
+    Open Finder in a separate window and navigate to the rEFInd download.
+    Drag the refind-install file into your Terminal window and press Enter.
+    When prompted, enter your administrator password and press Enter again.
+    After the installation, remember to enable SIP again.
+
+Next time you restart your Mac, the rEFInd menu should appear automatically. If it doesn't, hold Option while booting up to load your boot manager.
+
+
+ Step 3: Create an Ubuntu USB Installer
+
+Download the latest version of Ubuntu as a disk image from the Ubuntu website. You need to use a third-party app to create a USB installer from the Ubuntu disk image. One of the simplest apps for this is Etcher, but you can use anything you like.
+
+To create an Ubuntu USB installer with balenaEtcher:
+
+    Open Etcher and click Select Image.
+    Navigate to the Ubuntu disk image you downloaded and click Open.
+    Insert your USB flash drive and Etcher should automatically select it. If it doesn't, click Select Target or Change to select the flash drive yourself.
+    Make sure the correct drive is selected, since the next step erases it.
+    Click Flash and enter your administrator password to erase the USB flash drive and create an Ubuntu USB installer.
+    When it's finished, macOS prompts you to Eject the flash drive.
+
+ Step 4: Boot Ubuntu From Your USB Installer
+
+Restart your Mac while holding Option and reinsert the USB flash drive directly into your computer. When the boot loader appears, use the arrow keys to select the Boot EFI option and hit Enter.
+
+An Ubuntu loading screen appears, followed by the Ubuntu desktop. Use this opportunity to test Ubuntu on your Mac. Keep in mind that because it's running from your USB flash drive, it may be slow. Since Ubuntu can't use your Mac's Wi-Fi by default, use an Ethernet adapter to connect to the internet.
+
+Disable Secure Boot on Macs With the T2 Security Chip
+
+In 2018, Apple introduced the T2 security chip to new Macs. This advancement might stop you from booting other operating systems on your machine. If you experience any boot issues, follow Apple's instructions to disable the T2 chip.
+Step 5: Install Ubuntu on Your Mac
+
+When you're ready, double-click the Install Ubuntu item on the desktop.
+
+Follow the on-screen prompts to choose your language and keyboard layout. Choose a Normal installation and select the option to Install third-party software. You need to connect your Mac to the internet using an Ethernet cable to install this software, which makes functions like Wi-Fi and Bluetooth work. Then click Continue.
+
+ If prompted, choose to keep your partitions mounted.
+Option 1: Dual Boot Ubuntu With macOS
+
+From the Installation type screen, select Something Else and click Continue. On the next screen, you need to identify and select the UBUNTU partition you created. Unfortunately, there are no recognizable partition names, so look for a device with fat32 in the name that matches the partition size, measured in MB.
+
+ Double-click to select it and choose Use as: Ext4 journaling file system. Set the Mount point to / and check the box to Format the partition. Click OK. In the popup alert, click Continue to write previous changes to the disk.
+
+Now identify your SWAP partition, which should also have fat32 in the name. Double-click it and choose to Use as: swap area, then click OK. Open the Device for boot loader installation dropdown menu and select your UBUNTU partition again. The name should match what you selected for it from the table above.
+
+Take a moment to ensure you selected the correct partitions, then click Install Now. Click Continue in the popup alert to confirm you want to write changes to those disks. Finally, follow the on-screen prompts to choose your time zone and create a user account, then wait for the installation to complete.
+Option 2: Replace macOS With Ubuntu
+
+From the Installation type screen, select Erase disk and install Ubuntu.
+
+When you're ready, click Install Now and select your hard disk. Follow the on-screen prompts to set the correct time zone and create a user account, then wait for the installation to complete.
+
+ Make Using Linux on Mac Even Easier
+
+Congratulations! You successfully installed Linux on your MacBook Pro, iMac, or Mac mini! If you chose to dual boot Linux on your Mac, hold Option while booting up to choose between macOS and Ubuntu.
+
+Next, take a look at some tips to make your switch from macOS to Linux easier. By adding some familiar macOS features to Ubuntu, you'll make the most of Linux on your Mac in no time!
+
+
+
